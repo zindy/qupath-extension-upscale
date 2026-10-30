@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<fx:root type="VBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox spacing="8" alignment="CENTER_LEFT">
+        <padding>
+            <Insets topRightBottomLeft="8"/>
+        </padding>
+        <Label text="%dialog.model.label">
+            <tooltip>
+                <Tooltip text="%dialog.model.tooltip"/>
+            </tooltip>
+        </Label>
+        <HBox spacing="4" alignment="CENTER_LEFT">
+            <ComboBox fx:id="modelCombo" prefWidth="220.0">
+                <tooltip>
+                    <Tooltip text="%dialog.model.tooltip"/>
+                </tooltip>
+            </ComboBox>
+            <Button onAction="#refreshModels" text="%dialog.refresh.text">
+                <tooltip>
+                    <Tooltip text="%dialog.refresh.tooltip"/>
+                </tooltip>
+            </Button>
+            <Button onAction="#browseForModel" text="%dialog.browse.text">
+                <tooltip>
+                    <Tooltip text="%dialog.browse.tooltip"/>
+                </tooltip>
+            </Button>
+        </HBox>
+        <Label fx:id="folderLabel" wrapText="true" prefWidth="360.0"/>
+        <VBox fx:id="backendBox" spacing="8" alignment="CENTER_LEFT">
+            <Label text="%dialog.backend.label">
+                <tooltip>
+                    <Tooltip text="%dialog.backend.tooltip"/>
+                </tooltip>
+            </Label>
+            <ComboBox fx:id="backendCombo" prefWidth="220.0">
+                <tooltip>
+                    <Tooltip text="%dialog.backend.tooltip"/>
+                </tooltip>
+            </ComboBox>
+        </VBox>
+        <CheckBox fx:id="displayedOnlyCheck" text="%dialog.displayed.text">
+            <tooltip>
+                <Tooltip text="%dialog.displayed.tooltip"/>
+            </tooltip>
+        </CheckBox>
+        <HBox spacing="8" alignment="CENTER_RIGHT">
+            <Button onAction="#reset" text="%dialog.reset.text">
+                <tooltip>
+                    <Tooltip text="%dialog.reset.tooltip"/>
+                </tooltip>
+            </Button>
+            <Button onAction="#enhance" text="%dialog.enhance.text" defaultButton="true">
+                <tooltip>
+                    <Tooltip text="%dialog.enhance.tooltip"/>
+                </tooltip>
+            </Button>
+        </HBox>
+    </VBox>
+</fx:root>
