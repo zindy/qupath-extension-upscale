@@ -7,6 +7,8 @@ View an image at a higher pixel density in [QuPath](https://qupath.github.io), c
 The upscaled image is a normal QuPath image: the pixel size is divided by the scale, so objects, measurements and
 other extensions (cell detection, segmentation, ...) see the calibrated, larger image. It can also be added to a project.
 
+<img width="1920" height="1160" alt="image" src="https://github.com/user-attachments/assets/710fa66c-5f94-4c97-a4f8-ec3dcdc88359" />
+
 > **Status: experimental.** The output is for visualisation and for experiments such as running segmentation on
 > upscaled images. It is not suitable for quantifying intensities. See [Limitations](#limitations).
 
