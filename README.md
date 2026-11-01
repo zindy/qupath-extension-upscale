@@ -67,7 +67,7 @@ Menu: **Extensions > Upscale**
 | Item | What it does |
 |---|---|
 | Enhance! | Upscale the active viewer with the model and channel choice from last time |
-| Enhance... | Open the options dialog |
+| Upscale... | Open the options dialog |
 | Add to project | Add the upscaled image in the active viewer to the open project |
 | Reset view | Restore the original image in the active viewer |
 
@@ -88,6 +88,7 @@ The dialog has:
 | Tile overlap (source pixels) | 24 | Extra source pixels read around each tile to avoid seams. Larger networks (EDSR) need more |
 | Tile size (output pixels) | 960 | Preferred size of upscaled tiles; adjusted to a multiple of the scale |
 | OpenCV threads (0 = unchanged) | 0 | Sets OpenCV's thread count when an upscaled view is created. This is global to QuPath |
+| After enhancing | Ask to save | With a project open: *Ask to save* asks whether to add the upscaled image as a project entry, *Do nothing* never adds one (use **Add to project** when you want it), *Save automatically* adds it every time. An image with the same name already in the project is not added twice |
 
 ### Backends
 

@@ -195,7 +195,45 @@ public class UpscaleManager {
             originals.remove(upscaledData);
             if (original != current)
                 originals.put(current, original);
+            return;
         }
+        applyAfterEnhance(upscaledData);
+    }
+
+    /** What to do with the project once an upscaled view is shown (the "After enhancing" preference). */
+    private enum AfterEnhance {
+        ASK, NEVER, ALWAYS
+    }
+
+    private static AfterEnhance afterEnhance() {
+        String value = UpscaleExtension.afterEnhanceProperty().get();
+        if (resources.getString("pref.after.never").equals(value))
+            return AfterEnhance.NEVER;
+        if (resources.getString("pref.after.always").equals(value))
+            return AfterEnhance.ALWAYS;
+        return AfterEnhance.ASK;
+    }
+
+    /**
+     * Ask, do nothing, or add the new view to the open project, according to the "After enhancing" preference.
+     * Nothing happens if no project is open, or if the project already has an entry with the same name.
+     */
+    private void applyAfterEnhance(ImageData<BufferedImage> upscaledData) {
+        var project = qupath.getProject();
+        AfterEnhance behavior = afterEnhance();
+        if (project == null || behavior == AfterEnhance.NEVER)
+            return;
+        String name = upscaledData.getServer().getMetadata().getName();
+        boolean exists = project.getImageList().stream().anyMatch(e -> name.equals(e.getImageName()));
+        if (exists) {
+            Dialogs.showInfoNotification(resources.getString("title"),
+                    String.format(resources.getString("info.already-in-project"), name));
+            return;
+        }
+        if (behavior == AfterEnhance.ASK && !Dialogs.showYesNoDialog(resources.getString("title"),
+                String.format(resources.getString("ask.add-to-project"), name)))
+            return;
+        addToProject();
     }
 
     /**

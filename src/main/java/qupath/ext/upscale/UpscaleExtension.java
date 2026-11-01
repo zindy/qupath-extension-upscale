@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
@@ -30,7 +31,7 @@ import qupath.lib.io.GsonTools;
  * Upscale: view a multichannel image at a higher pixel density, computed on the fly
  * with OpenCV dnn_superres models (or bicubic interpolation as a control).
  * <p>
- * Menu: Extensions &gt; Upscale &gt; Enhance! / Enhance... / Reset view.
+ * Menu: Extensions &gt; Upscale &gt; Enhance! / Upscale... / Reset view.
  * <p>
  * <b>Important!</b> The name &amp; package of this class must match the file
  * <pre>
@@ -70,6 +71,13 @@ public class UpscaleExtension implements QuPathExtension {
     private static final StringProperty backend = PathPrefs.createPersistentPreference(
             "upscale.backend", Backend.CPU.name());
 
+    /**
+     * What to do with the open project after an upscaled view is shown: "Ask to save" (default), "Do nothing" or
+     * "Save automatically". The value is the label, see the strings file. Shown in the preferences.
+     */
+    private static final StringProperty afterEnhance = PathPrefs.createPersistentPreference(
+            "upscale.afterEnhance", resources.getString("pref.after.ask"));
+
     /** Whether to process only the displayed channels (managed by the dialog). */
     private static final BooleanProperty displayedOnly = PathPrefs.createPersistentPreference(
             "upscale.displayedOnly", true);
@@ -97,6 +105,11 @@ public class UpscaleExtension implements QuPathExtension {
     /** @return the identifier of the model used last */
     public static StringProperty lastModelProperty() {
         return lastModel;
+    }
+
+    /** @return the "after enhancing" preference (the label of the chosen option) */
+    public static StringProperty afterEnhanceProperty() {
+        return afterEnhance;
     }
 
     /** @return the name of the backend used last */
@@ -172,6 +185,15 @@ public class UpscaleExtension implements QuPathExtension {
                 .name(resources.getString("pref.threads.name"))
                 .category(category)
                 .description(resources.getString("pref.threads.description"))
+                .build());
+        items.add(new PropertyItemBuilder<>(afterEnhance, String.class)
+                .name(resources.getString("pref.after.name"))
+                .category(category)
+                .description(resources.getString("pref.after.description"))
+                .choices(FXCollections.observableArrayList(
+                        resources.getString("pref.after.ask"),
+                        resources.getString("pref.after.never"),
+                        resources.getString("pref.after.always")))
                 .build());
     }
 
